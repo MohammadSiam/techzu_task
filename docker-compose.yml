@@ -22,7 +22,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/social_feed?schema=public
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: social_feed
+      DB_USER: postgres
+      DB_PASSWORD: postgres
       JWT_ACCESS_SECRET: dev-access-secret-change-in-production
       JWT_REFRESH_SECRET: dev-refresh-secret-change-in-production
       PORT: 3000

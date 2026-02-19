@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Stack, useRouter, useSegments } from "expo-router";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import { ActivityIndicator, View } from "react-native";
@@ -16,6 +16,11 @@ function RootLayoutNav() {
   const dispatch = useDispatch<AppDispatch>();
   const segments = useSegments();
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     async function restoreTokens() {
@@ -41,7 +46,7 @@ function RootLayoutNav() {
   }, [dispatch]);
 
   useEffect(() => {
-    if (isLoading) return;
+    if (!mounted || isLoading) return;
 
     const inAuth = segments[0] === "sign-in" || segments[0] === "sign-up";
 
@@ -50,7 +55,7 @@ function RootLayoutNav() {
     } else if (isAuthenticated && inAuth) {
       router.replace("/(app)/(tabs)");
     }
-  }, [isAuthenticated, isLoading, segments, router]);
+  }, [mounted, isAuthenticated, isLoading, segments, router]);
 
   if (isLoading) {
     return (

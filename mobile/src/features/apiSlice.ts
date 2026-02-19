@@ -8,7 +8,6 @@ import {
 import { RootState } from "../store";
 import { setTokens, logout } from "./authSlice";
 import {
-  getAccessToken,
   getRefreshToken,
   setAccessToken,
   setRefreshToken,
@@ -21,11 +20,10 @@ import {
   Post,
   Comment,
   LikeResponse,
-  PaginationMeta,
 } from "../types";
 
-// Change this to your machine's local IP when testing on device
-const BASE_URL = "http://localhost:3000";
+// Use local IP for device testing, localhost for web
+const BASE_URL = "http://192.168.0.105:3000";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,

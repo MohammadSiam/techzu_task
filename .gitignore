@@ -13,6 +13,8 @@ dist/
 # Generated
 backend/generated/
 
+/mobile/google-services.json
+
 # OS
 .DS_Store
 Thumbs.db

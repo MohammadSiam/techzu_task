@@ -48,7 +48,7 @@ export default function Feed() {
 
   const renderItem = useCallback(
     ({ item }: { item: Post }) => <PostCard post={item} />,
-    []
+    [],
   );
 
   return (
@@ -56,6 +56,7 @@ export default function Feed() {
       <TextInput
         style={styles.filterInput}
         placeholder="Filter by username..."
+        placeholderTextColor={Colors.text}
         value={filter}
         onChangeText={onFilterChange}
         autoCapitalize="none"

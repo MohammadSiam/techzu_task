@@ -12,10 +12,7 @@ import {
 import { Link } from "expo-router";
 import { useSignupMutation } from "../src/features/apiSlice";
 import { useAuth } from "../src/hooks/useAuth";
-import {
-  setAccessToken,
-  setRefreshToken,
-} from "../src/lib/secureStorage";
+import { setAccessToken, setRefreshToken } from "../src/lib/secureStorage";
 import { Colors, Spacing, FontSize } from "../src/constants/theme";
 
 export default function SignUp() {
@@ -46,7 +43,7 @@ export default function SignUp() {
             user: result.data.user,
             accessToken: result.data.accessToken,
             refreshToken: result.data.refreshToken,
-          })
+          }),
         );
       } else {
         Alert.alert("Error", result.error || "Signup failed");
@@ -69,6 +66,7 @@ export default function SignUp() {
         <TextInput
           style={styles.input}
           placeholder="Username"
+          placeholderTextColor={Colors.text}
           value={username}
           onChangeText={setUsername}
           autoCapitalize="none"
@@ -78,6 +76,7 @@ export default function SignUp() {
         <TextInput
           style={styles.input}
           placeholder="Email"
+          placeholderTextColor={Colors.text}
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -88,6 +87,7 @@ export default function SignUp() {
         <TextInput
           style={styles.input}
           placeholder="Password (min 6 characters)"
+          placeholderTextColor={Colors.text}
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     fontSize: FontSize.lg,
     marginBottom: Spacing.md,
+    color: Colors.text,
   },
   button: {
     backgroundColor: Colors.primary,
