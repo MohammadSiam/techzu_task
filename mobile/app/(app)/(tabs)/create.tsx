@@ -51,6 +51,7 @@ export default function CreatePost() {
         <TextInput
           style={styles.input}
           placeholder="What's on your mind?"
+          placeholderTextColor={Colors.text}
           value={content}
           onChangeText={setContent}
           multiline

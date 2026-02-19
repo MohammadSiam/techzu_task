@@ -66,7 +66,7 @@ export default function PostDetail() {
 
   const renderComment = useCallback(
     ({ item }: { item: Comment }) => <CommentItem comment={item} />,
-    []
+    [],
   );
 
   if (postLoading || !post) {
@@ -104,14 +104,10 @@ export default function PostDetail() {
                 style={styles.actionButton}
                 onPress={() => toggleLike(post.id)}
               >
-                <Text
-                  style={[styles.actionIcon, post.isLiked && styles.liked]}
-                >
+                <Text style={[styles.actionIcon, post.isLiked && styles.liked]}>
                   {post.isLiked ? "♥" : "♡"}
                 </Text>
-                <Text
-                  style={[styles.actionText, post.isLiked && styles.liked]}
-                >
+                <Text style={[styles.actionText, post.isLiked && styles.liked]}>
                   {post.likesCount} likes
                 </Text>
               </TouchableOpacity>
@@ -149,6 +145,7 @@ export default function PostDetail() {
         <TextInput
           style={styles.commentInput}
           placeholder="Write a comment..."
+          placeholderTextColor={Colors.text}
           value={commentText}
           onChangeText={setCommentText}
           maxLength={500}
@@ -158,9 +155,7 @@ export default function PostDetail() {
           onPress={handleComment}
           disabled={commenting || !commentText.trim()}
         >
-          <Text style={styles.sendText}>
-            {commenting ? "..." : "Send"}
-          </Text>
+          <Text style={styles.sendText}>{commenting ? "..." : "Send"}</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>

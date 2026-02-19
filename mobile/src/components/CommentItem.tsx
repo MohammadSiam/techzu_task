@@ -34,6 +34,7 @@ function getTimeAgo(date: Date): string {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: Spacing.sm,
+    paddingHorizontal: Spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: Colors.border,
   },
