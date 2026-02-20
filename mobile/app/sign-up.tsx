@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Alert,
@@ -14,6 +13,7 @@ import { useSignupMutation } from "../src/features/apiSlice";
 import { useAuth } from "../src/hooks/useAuth";
 import { setAccessToken, setRefreshToken } from "../src/lib/secureStorage";
 import { Colors, Spacing, FontSize } from "../src/constants/theme";
+import AppInput from "../src/components/AppInput";
 
 export default function SignUp() {
   const [username, setUsername] = useState("");
@@ -43,7 +43,7 @@ export default function SignUp() {
             user: result.data.user,
             accessToken: result.data.accessToken,
             refreshToken: result.data.refreshToken,
-          }),
+          })
         );
       } else {
         Alert.alert("Error", result.error || "Signup failed");
@@ -63,20 +63,18 @@ export default function SignUp() {
         <Text style={styles.title}>Create Account</Text>
         <Text style={styles.subtitle}>Join the social feed</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor={Colors.text}
+        <AppInput
+          label="Username"
+          placeholder="johndoe"
           value={username}
           onChangeText={setUsername}
           autoCapitalize="none"
           autoCorrect={false}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor={Colors.text}
+        <AppInput
+          label="Email"
+          placeholder="you@example.com"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -84,10 +82,9 @@ export default function SignUp() {
           autoCorrect={false}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password (min 6 characters)"
-          placeholderTextColor={Colors.text}
+        <AppInput
+          label="Password"
+          placeholder="Min 6 characters"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -137,20 +134,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: Spacing.xl,
   },
-  input: {
-    backgroundColor: Colors.surface,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 8,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 12,
-    fontSize: FontSize.lg,
-    marginBottom: Spacing.md,
-    color: Colors.text,
-  },
   button: {
     backgroundColor: Colors.primary,
-    borderRadius: 8,
+    borderRadius: 10,
     paddingVertical: 14,
     alignItems: "center",
     marginTop: Spacing.sm,

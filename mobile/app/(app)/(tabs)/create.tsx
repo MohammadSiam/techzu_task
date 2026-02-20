@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Alert,
@@ -12,6 +11,7 @@ import {
 import { useRouter } from "expo-router";
 import { useCreatePostMutation } from "../../../src/features/apiSlice";
 import { Colors, Spacing, FontSize } from "../../../src/constants/theme";
+import AppTextArea from "../../../src/components/AppTextArea";
 
 const MAX_LENGTH = 500;
 
@@ -46,34 +46,24 @@ export default function CreatePost() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       <View style={styles.inner}>
-        <Text style={styles.title}>Create Post</Text>
-
-        <TextInput
-          style={styles.input}
-          placeholder="What's on your mind?"
-          placeholderTextColor={Colors.text}
+        <AppTextArea
+          label="What's on your mind?"
+          placeholder="Share something with the community..."
           value={content}
           onChangeText={setContent}
-          multiline
           maxLength={MAX_LENGTH}
-          textAlignVertical="top"
+          style={styles.textarea}
         />
 
-        <View style={styles.footer}>
-          <Text style={styles.charCount}>
-            {content.length}/{MAX_LENGTH}
+        <TouchableOpacity
+          style={[styles.button, (isLoading || !content.trim()) && styles.buttonDisabled]}
+          onPress={handleSubmit}
+          disabled={isLoading || !content.trim()}
+        >
+          <Text style={styles.buttonText}>
+            {isLoading ? "Posting..." : "Post"}
           </Text>
-
-          <TouchableOpacity
-            style={[styles.button, isLoading && styles.buttonDisabled]}
-            onPress={handleSubmit}
-            disabled={isLoading || !content.trim()}
-          >
-            <Text style={styles.buttonText}>
-              {isLoading ? "Posting..." : "Post"}
-            </Text>
-          </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
@@ -88,41 +78,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: Spacing.md,
   },
-  title: {
-    fontSize: FontSize.xl,
-    fontWeight: "bold",
-    color: Colors.text,
-    marginBottom: Spacing.md,
-  },
-  input: {
-    flex: 1,
-    backgroundColor: Colors.surface,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 12,
-    padding: Spacing.md,
-    fontSize: FontSize.lg,
-    lineHeight: 24,
-    maxHeight: 300,
-  },
-  footer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: Spacing.md,
-  },
-  charCount: {
-    fontSize: FontSize.sm,
-    color: Colors.textSecondary,
+  textarea: {
+    minHeight: 200,
+    maxHeight: 400,
   },
   button: {
     backgroundColor: Colors.primary,
-    borderRadius: 8,
-    paddingVertical: 12,
-    paddingHorizontal: Spacing.lg,
+    borderRadius: 10,
+    paddingVertical: 14,
+    alignItems: "center",
   },
   buttonDisabled: {
-    opacity: 0.6,
+    opacity: 0.5,
   },
   buttonText: {
     color: "#FFF",

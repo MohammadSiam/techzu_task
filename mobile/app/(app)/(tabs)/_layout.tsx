@@ -1,6 +1,21 @@
 import { Tabs } from "expo-router";
-import { Text, Platform } from "react-native";
+import { Platform } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { Colors, FontSize } from "../../../src/constants/theme";
+
+type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
+
+function TabIcon({
+  name,
+  color,
+  size = 24,
+}: {
+  name: IoniconsName;
+  color: string;
+  size?: number;
+}) {
+  return <Ionicons name={name} size={size} color={color} />;
+}
 
 export default function TabLayout() {
   return (
@@ -10,30 +25,31 @@ export default function TabLayout() {
         tabBarInactiveTintColor: Colors.textSecondary,
         tabBarStyle: {
           backgroundColor: Colors.surface,
-          borderTopWidth: 0,
+          borderTopWidth: 1,
+          borderTopColor: Colors.border,
           height: Platform.OS === "ios" ? 88 : 64,
           paddingBottom: Platform.OS === "ios" ? 28 : 10,
           paddingTop: 8,
-          elevation: 12,
-          shadowColor: Colors.primary,
-          shadowOffset: { width: 0, height: -3 },
-          shadowOpacity: 0.08,
-          shadowRadius: 12,
+          elevation: 8,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.06,
+          shadowRadius: 8,
         },
         tabBarLabelStyle: {
           fontSize: FontSize.sm,
-          fontWeight: "700",
+          fontWeight: "600",
           marginTop: 2,
-          letterSpacing: 0.3,
         },
         headerStyle: {
           backgroundColor: Colors.surface,
+          elevation: 1,
+          shadowOpacity: 0.05,
         },
         headerTitleStyle: {
           fontSize: FontSize.xl,
-          fontWeight: "800",
+          fontWeight: "700",
           color: Colors.text,
-          letterSpacing: 0.3,
         },
         headerTintColor: Colors.primary,
       }}
@@ -42,8 +58,11 @@ export default function TabLayout() {
         name="index"
         options={{
           title: "Feed",
-          tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 22, color }}>📋</Text>
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              name={focused ? "home" : "home-outline"}
+              color={color}
+            />
           ),
         }}
       />
@@ -51,8 +70,11 @@ export default function TabLayout() {
         name="create"
         options={{
           title: "Create",
-          tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 22, color }}>✏️</Text>
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              name={focused ? "add-circle" : "add-circle-outline"}
+              color={color}
+            />
           ),
         }}
       />
@@ -60,8 +82,11 @@ export default function TabLayout() {
         name="profile"
         options={{
           title: "Profile",
-          tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 22, color }}>👤</Text>
+          tabBarIcon: ({ color, focused }) => (
+            <TabIcon
+              name={focused ? "person" : "person-outline"}
+              color={color}
+            />
           ),
         }}
       />

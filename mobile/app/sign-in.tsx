@@ -2,7 +2,6 @@ import { useState } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   Alert,
@@ -12,11 +11,9 @@ import {
 import { Link } from "expo-router";
 import { useLoginMutation } from "../src/features/apiSlice";
 import { useAuth } from "../src/hooks/useAuth";
-import {
-  setAccessToken,
-  setRefreshToken,
-} from "../src/lib/secureStorage";
+import { setAccessToken, setRefreshToken } from "../src/lib/secureStorage";
 import { Colors, Spacing, FontSize } from "../src/constants/theme";
+import AppInput from "../src/components/AppInput";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -60,10 +57,9 @@ export default function SignIn() {
         <Text style={styles.title}>Social Feed</Text>
         <Text style={styles.subtitle}>Sign in to your account</Text>
 
-        <TextInput
-          style={styles.input}
-          placeholder="Email"
-          placeholderTextColor={Colors.text}
+        <AppInput
+          label="Email"
+          placeholder="you@example.com"
           value={email}
           onChangeText={setEmail}
           keyboardType="email-address"
@@ -71,10 +67,9 @@ export default function SignIn() {
           autoCorrect={false}
         />
 
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor={Colors.text}
+        <AppInput
+          label="Password"
+          placeholder="••••••••"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -123,20 +118,9 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: Spacing.xl,
   },
-  input: {
-    backgroundColor: Colors.surface,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 8,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 12,
-    fontSize: FontSize.lg,
-    marginBottom: Spacing.md,
-    color: Colors.text,
-  },
   button: {
     backgroundColor: Colors.primary,
-    borderRadius: 8,
+    borderRadius: 10,
     paddingVertical: 14,
     alignItems: "center",
     marginTop: Spacing.sm,

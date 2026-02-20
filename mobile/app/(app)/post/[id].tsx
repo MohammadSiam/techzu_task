@@ -2,7 +2,6 @@ import { useState, useCallback } from "react";
 import {
   View,
   Text,
-  TextInput,
   TouchableOpacity,
   FlatList,
   StyleSheet,
@@ -19,6 +18,7 @@ import {
   useToggleLikeMutation,
 } from "../../../src/features/apiSlice";
 import CommentItem from "../../../src/components/CommentItem";
+import AppInput from "../../../src/components/AppInput";
 import { Colors, Spacing, FontSize } from "../../../src/constants/theme";
 import { Comment } from "../../../src/types";
 
@@ -142,10 +142,10 @@ export default function PostDetail() {
       />
 
       <View style={styles.inputBar}>
-        <TextInput
+        <AppInput
+          containerStyle={styles.commentInputContainer}
           style={styles.commentInput}
           placeholder="Write a comment..."
-          placeholderTextColor={Colors.text}
           value={commentText}
           onChangeText={setCommentText}
           maxLength={500}
@@ -250,16 +250,14 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: Colors.border,
   },
-  commentInput: {
+  commentInputContainer: {
     flex: 1,
-    backgroundColor: Colors.background,
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 20,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 8,
-    fontSize: FontSize.md,
+    marginBottom: 0,
     marginRight: Spacing.sm,
+  },
+  commentInput: {
+    borderRadius: 20,
+    paddingVertical: 8,
   },
   sendButton: {
     backgroundColor: Colors.primary,
