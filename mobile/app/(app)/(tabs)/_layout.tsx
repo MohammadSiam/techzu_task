@@ -1,20 +1,12 @@
 import { Tabs } from "expo-router";
-import { Platform } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { Colors, FontSize } from "../../../src/constants/theme";
+import { Colors, FontSize, Spacing } from "../../../src/constants/theme";
 
 type IoniconsName = React.ComponentProps<typeof Ionicons>["name"];
 
-function TabIcon({
-  name,
-  color,
-  size = 24,
-}: {
-  name: IoniconsName;
-  color: string;
-  size?: number;
-}) {
-  return <Ionicons name={name} size={size} color={color} />;
+function TabIcon({ name, color }: { name: IoniconsName; color: string }) {
+  return <Ionicons name={name} size={24} color={color} />;
 }
 
 export default function TabLayout() {
@@ -23,35 +15,12 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: Colors.textSecondary,
-        tabBarStyle: {
-          backgroundColor: Colors.surface,
-          borderTopWidth: 1,
-          borderTopColor: Colors.border,
-          height: Platform.OS === "ios" ? 88 : 64,
-          paddingBottom: Platform.OS === "ios" ? 28 : 10,
-          paddingTop: 8,
-          elevation: 8,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: -2 },
-          shadowOpacity: 0.06,
-          shadowRadius: 8,
-        },
-        tabBarLabelStyle: {
-          fontSize: FontSize.sm,
-          fontWeight: "600",
-          marginTop: 2,
-        },
-        headerStyle: {
-          backgroundColor: Colors.surface,
-          elevation: 1,
-          shadowOpacity: 0.05,
-        },
-        headerTitleStyle: {
-          fontSize: FontSize.xl,
-          fontWeight: "700",
-          color: Colors.text,
-        },
-        headerTintColor: Colors.primary,
+        tabBarStyle: styles.tabBar,
+        tabBarLabelStyle: styles.tabBarLabel,
+        headerStyle: styles.header as any,
+        headerTitleStyle: styles.headerTitle,
+        headerTintColor: "#FFF",
+        headerTitleAlign: "center",
       }}
     >
       <Tabs.Screen
@@ -59,10 +28,7 @@ export default function TabLayout() {
         options={{
           title: "Feed",
           tabBarIcon: ({ color, focused }) => (
-            <TabIcon
-              name={focused ? "home" : "home-outline"}
-              color={color}
-            />
+            <TabIcon name={focused ? "home" : "home-outline"} color={color} />
           ),
         }}
       />
@@ -93,3 +59,29 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabBar: {
+    backgroundColor: Colors.surface,
+    borderTopWidth: 0.5,
+    borderTopColor: Colors.border,
+    height: Platform.OS === "ios" ? 82 : 60,
+    paddingBottom: Platform.OS === "ios" ? Spacing.lg : Spacing.sm,
+    paddingTop: Spacing.sm,
+    elevation: 0,
+    shadowOpacity: 0,
+  },
+  tabBarLabel: {
+    fontSize: FontSize.sm,
+    fontWeight: "500",
+    marginTop: 1,
+  },
+  header: {
+    backgroundColor: Colors.primary,
+  },
+  headerTitle: {
+    fontSize: FontSize.lg,
+    fontWeight: "800",
+    color: "#FFF",
+  },
+});
