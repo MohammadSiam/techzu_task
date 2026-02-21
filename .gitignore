@@ -10,6 +10,9 @@ dist/
 .env
 .env.local
 
+# Firebase
+mobile/google-services.json
+
 # Generated
 backend/generated/
 
