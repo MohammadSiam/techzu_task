@@ -11,12 +11,14 @@
       "android": {
         "buildType": "apk"
       },
-      "distribution": "internal"
+      "distribution": "internal",
+      "node": "22.16.0"
     },
     "production": {
       "android": {
         "buildType": "app-bundle"
-      }
+      },
+      "node": "22.16.0"
     }
   }
 }
