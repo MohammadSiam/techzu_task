@@ -9,7 +9,9 @@ import { setCredentials, setLoading } from "../src/features/authSlice";
 import {
   getAccessToken,
   getRefreshToken,
+  clearTokens,
 } from "../src/lib/secureStorage";
+import { BASE_URL } from "../src/constants/config";
 import AppSplash from "../src/components/AppSplash";
 
 function RootLayoutNav() {
@@ -31,13 +33,34 @@ function RootLayoutNav() {
       const refreshToken = await getRefreshToken();
 
       if (accessToken && refreshToken) {
-        dispatch(
-          setCredentials({
-            user: { id: "", username: "", email: "", createdAt: "" },
-            accessToken,
-            refreshToken,
-          })
-        );
+        try {
+          const res = await fetch(`${BASE_URL}/auth/refresh`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ refreshToken }),
+          });
+
+          if (res.ok) {
+            const json = await res.json();
+            if (json.success && json.data) {
+              dispatch(
+                setCredentials({
+                  user: json.data.user || { id: "", username: "", email: "", createdAt: "" },
+                  accessToken: json.data.accessToken,
+                  refreshToken: json.data.refreshToken,
+                })
+              );
+              return;
+            }
+          }
+          // Token invalid or backend returned error
+          await clearTokens();
+          dispatch(setLoading(false));
+        } catch {
+          // Backend unreachable — clear tokens, show login
+          await clearTokens();
+          dispatch(setLoading(false));
+        }
       } else {
         dispatch(setLoading(false));
       }

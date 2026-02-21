@@ -22,8 +22,7 @@ import {
   LikeResponse,
 } from "../types";
 
-// Use local IP for device testing, localhost for web
-const BASE_URL = "http://192.168.0.105:3000";
+import { BASE_URL } from "../constants/config";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
@@ -42,6 +41,13 @@ const baseQueryWithReauth: BaseQueryFn<
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
   let result = await baseQuery(args, api, extraOptions);
+
+  // Backend unreachable — clear tokens and go to login
+  if (result.error && result.error.status === "FETCH_ERROR") {
+    await clearTokens();
+    api.dispatch(logout());
+    return result;
+  }
 
   if (result.error && result.error.status === 401) {
     const refreshToken = await getRefreshToken();

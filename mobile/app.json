@@ -40,6 +40,12 @@
           "androidMode": "default"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6d3e1f35-68db-4dc0-9d3a-54bb8e0948db"
+      }
+    }
   }
 }
